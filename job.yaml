@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: surge-job-wq
+spec:
+  parallelism: 5
+  template:
+    metadata:
+      name: surge-job-wq
+    spec:
+      containers:
+      - name: c
+        image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
+        volumeMounts:
+        - name: service-account-credentials-volume
+          mountPath: /etc/gcp
+          readOnly: true
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/gcp/sa_credentials.json
+      volumes:
+      - name: service-account-credentials-volume
+        secret:
+          secretName: surge-service-account-credentials
+          items:
+          - key: sa_json
+            path: sa_credentials.json
+      restartPolicy: OnFailure
