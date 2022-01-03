@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 from google.cloud import storage
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+import json
 
 host="redis"
 bucket_name = 'steinbeck-surge-results'
@@ -22,6 +23,23 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     #     )
     # )
 
+def getTimeStamp():
+    return str(datetime.now())
+
+def getJobLog(start, end, stdOut, stdErr, uploadStart, uploadEnd):
+    job = {
+        'start': start,
+        'end': end,
+        'stdOut': stdOut.decode("utf-8"),
+        'stdErr': stdErr.decode("utf-8"),
+        'uploadStart': uploadStart,
+        'uploadEnd': uploadEnd
+    }
+    return getJSONString(job)
+
+def getJSONString(job):
+    return json.dumps(job)
+
 q = rediswq.RedisWQ(name="surge_jobs", host=host, port=6379, password='')
 # print("Worker with sessionID: " +  q.sessionID())
 # print("Initial queue state: empty=" + str(q.empty()))
@@ -32,16 +50,19 @@ while not q.empty():
     values =  itemstr.split("_")
     job = values[1]
     mf = values[0]
-    q._db.set(job + ':' + mf + ':' + 'start', str(datetime.now()))
+    start = getTimeStamp()
     process = Popen(['surge', '-o'+mf+".smiles.gz", '-z', '-S',  mf], stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
-    q._db.set(job + ':' + mf + ':' + 'stdout', stdout)
-    q._db.set(job + ':' + mf + ':' + 'stderr', stderr)
     if process.returncode != 0: 
+        end =  getTimeStamp()
+        q._db.set(job + ':' + mf, getJobLog(start, end, stdout, stderr, 'None', 'None'))
         q._db.lpush(job + ':' + 'failed', mf)
         q.complete(item)
     else:
-        q._db.set(job + ':' + mf + ':' + 'end', str(datetime.now()))
-        q._db.lpush(job + ':' + 'completed', mf)
+        end =  getTimeStamp()
+        uploadStart =  getTimeStamp()
         upload_blob(bucket_name, mf+".smiles.gz", job + "/" + mf+".smiles.gz" )
+        uploadEnd =  getTimeStamp()
+        q._db.set(job + ':' + mf, getJobLog(start, end, stdout, stderr, uploadStart, uploadEnd))
+        q._db.lpush(job + ':' + 'completed', mf)
         q.complete(item)
