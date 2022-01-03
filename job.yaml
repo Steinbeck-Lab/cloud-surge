@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: surge-job-wq
 spec:
-  parallelism: 5
+  parallelism: 20
   template:
     metadata:
       name: surge-job-wq
@@ -11,6 +11,11 @@ spec:
       containers:
       - name: c
         image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
+        resources:
+          requests:
+            ephemeral-storage: "4Gi"
+          limits:
+            ephemeral-storage: "4Gi"
         volumeMounts:
         - name: service-account-credentials-volume
           mountPath: /etc/gcp
