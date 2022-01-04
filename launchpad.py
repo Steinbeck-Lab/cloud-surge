@@ -9,68 +9,79 @@ r = redis.Redis(
     port=6379,
     password='')
 
-job_id = uuid.uuid4()
-# r.delete('surge_jobs')
-# print(job_id)
+def chunks(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
-mf = []
-with open("./formulae/formulaeMax10HA.txt") as f:
-    lines = f.readlines()
-    for line in lines:
-        mf.append(line.rstrip() + "_" + str(job_id))
+# # r.delete('surge_jobs')
 
-totalJobs = len(mf)
-# r.lpush('surge_jobs', *mf)
+# job_id = uuid.uuid4()
+# # print(job_id)
 
+# mf = []
+# with open("./formulae/formulaeMax10HA.txt") as f:
+#     lines = f.readlines()
+#     for line in lines:
+#         mf.append(line.rstrip() + "_" + str(job_id))
+
+# totalJobs = len(mf)
+# # r.lpush('surge_jobs', *mf)
+
+# # pendingJobs = r.lrange('surge_jobs', 0, -1)
+# # print(len(pendingJobs))
+
+# jobId = "8cfa67bb-476f-4544-af77-11a252b13dff"
+# print("Job id:" + str(jobId))
 # pendingJobs = r.lrange('surge_jobs', 0, -1)
-# print(len(pendingJobs))
-
-jobId = "3b5f8ea1-9c2e-4a9c-9a28-c717b72dcbf8"
-print("Job id:" + str(jobId))
-pendingJobs = r.lrange('surge_jobs', 0, -1)
-pendingJobsCount = len(pendingJobs)
-print("Pending mfs:" + str(pendingJobsCount))
-completedJobs = r.lrange(jobId + ':completed', 0, -1)
-completedJobsCount = len(completedJobs)
-print("Completed mfs:" + str(completedJobsCount))
-failedJobs = r.lrange(jobId + ':failed', 0, -1)
-# print(failedJobs)
-failedJobsCount = len(failedJobs)
-print("Failed mfs:" + str(failedJobsCount))
-missingJobsCount = totalJobs - (completedJobsCount + failedJobsCount + pendingJobsCount)
-print("Missing mfs:" + str(missingJobsCount))
+# pendingJobsCount = len(pendingJobs)
+# print("Pending mfs:" + str(pendingJobsCount))
+# completedJobs = r.lrange(jobId + ':completed', 0, -1)
+# completedJobsCount = len(completedJobs)
+# print("Completed mfs:" + str(completedJobsCount))
+# failedJobs = r.lrange(jobId + ':failed', 0, -1)
+# # print(failedJobs)
+# failedJobsCount = len(failedJobs)
+# print("Failed mfs:" + str(failedJobsCount))
+# missingJobsCount = totalJobs - (completedJobsCount + failedJobsCount + pendingJobsCount)
+# print("Missing mfs:" + str(missingJobsCount))
 
 # print(r.get((jobId+":C2Br2IH:stderr")))
 # print(r.get('dbe40224-bb77-477b-a208-9a036d7f8544:'))
 # print(r.lrange('surge_jobs', 0, -1))
 
 # Export output
-# parsedKeys=[]
-# exportJobId = str('c74df038-d62e-40ff-af2c-b2f47cbf50a2')
-# r.delete(exportJobId + ':failed')
-# r.delete(exportJobId + ':completed')
-# jobOutputFile = open("logs/" + exportJobId + '.txt',"a+")
-# for key in r.scan_iter(exportJobId + ":*"):
-#     nmap = key.decode("utf-8").rsplit(':', 1)
-#     nkey = nmap[0]
-#     mf = nmap[1]
-#     if nmap not in parsedKeys and '.' not in nkey :
-#         mObj = {}
-#         value = json.loads(r.get(key).decode("utf-8"))
-#         mObj['mf'] = mf
-#         mObj['start'] = value['start']
-#         mObj['end'] = value['end']
-#         mObj['stdOut'] = value['stdOut'].rstrip().replace("/n", "|")
-#         mObj['stdErr'] = value['stdErr'].rstrip().replace("/n", "|")
-#         mObj['uploadStart'] = value['uploadStart']
-#         mObj['uploadEnd'] = value['uploadEnd']
-#         jobOutputFile.write(",".join(list(mObj.values()))+'\n')
-#         r.delete(key)
-#         parsedKeys.append(nkey)
-#         print(len(parsedKeys))
+parsedKeys=[]
+exportJobId = str('8cfa67bb-476f-4544-af77-11a252b13dff')
+r.delete(exportJobId + ':failed')
+r.delete(exportJobId + ':completed')
+jobOutputFile = open("logs/" + exportJobId + '.txt',"a+")
+with open("./formulae/formulaeMax10HA.txt") as f:
+    lines = f.readlines()
+    nkey = exportJobId
+    for mfs in chunks(lines, 500):
+        smfs = []
+        for mf in mfs:
+            if mf not in parsedKeys:
+                smfs.append(nkey + ":" + mf.rstrip())
+        mfdata = r.mget(smfs)
+        for mfd in mfdata:
+            mObj = {}
+            value = json.loads(mfd.decode("utf-8"))
+            sout = value['stdErr'].rstrip().replace('\n', '|').replace('\r', '|')
+            mObj['mf'] = sout.split("  ")[0]
+            mObj['start'] = value['start']
+            mObj['end'] = value['end']
+            mObj['stdOut'] = value['stdOut'].rstrip().replace('\n', '|').replace('\r', '|')
+            mObj['stdErr'] = sout
+            mObj['uploadStart'] = value['uploadStart']
+            mObj['uploadEnd'] = value['uploadEnd']
+            mObj['oFileSize'] = str(value['oFileSize'])
+            jobOutputFile.write(",".join(list(mObj.values()))+'\n')
+            # r.delete(key)
+            parsedKeys.append(nkey)
+        print(len(parsedKeys))
 # delete parsed keys
-# jobOutputFile.close()
-
+jobOutputFile.close()
 
 # Delete all keys
 # for key in r.scan_iter("*"):
