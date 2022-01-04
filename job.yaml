@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: surge-job-wq
 spec:
-  parallelism: 20
+  parallelism: 100
   template:
     metadata:
       name: surge-job-wq
@@ -14,8 +14,10 @@ spec:
         resources:
           requests:
             ephemeral-storage: "4Gi"
+            cpu: 1000m
           limits:
             ephemeral-storage: "4Gi"
+            cpu: 1000m
         volumeMounts:
         - name: service-account-credentials-volume
           mountPath: /etc/gcp

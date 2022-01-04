@@ -9,6 +9,9 @@ a5f66062-95b0-4611-8b58-b6d005ce1700: 8HA ~ 20
 76d07192-f338-4397-b3b3-4de71d5711d6: 10HA (1CPU) ~ 20
 3b5f8ea1-9c2e-4a9c-9a28-c717b72dcbf8: 10HA (1CPU) ~ 100
 8cfa67bb-476f-4544-af77-11a252b13dff: 10HA (2CPU) ~ 100
+1dc6de65-37a1-496b-a993-63e3d1414bd8: 11HA (1CPU) ~ 100 ~ 37mins
+7acadc37-0a46-4d04-a999-f0c6eea0357e: 11HA (2CPU) ~ 100 ~ 27mins ??
+
 
 Redis:
 

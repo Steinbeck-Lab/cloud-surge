@@ -19,18 +19,18 @@ def chunks(lst, n):
 # # print(job_id)
 
 # mf = []
-# with open("./formulae/formulaeMax10HA.txt") as f:
+# with open("./formulae/formulaeMax11HA.txt") as f:
 #     lines = f.readlines()
 #     for line in lines:
 #         mf.append(line.rstrip() + "_" + str(job_id))
 
 # totalJobs = len(mf)
-# # r.lpush('surge_jobs', *mf)
+# # # r.lpush('surge_jobs', *mf)
 
 # # pendingJobs = r.lrange('surge_jobs', 0, -1)
 # # print(len(pendingJobs))
 
-# jobId = "8cfa67bb-476f-4544-af77-11a252b13dff"
+# jobId = "7acadc37-0a46-4d04-a999-f0c6eea0357e"
 # print("Job id:" + str(jobId))
 # pendingJobs = r.lrange('surge_jobs', 0, -1)
 # pendingJobsCount = len(pendingJobs)
@@ -45,17 +45,13 @@ def chunks(lst, n):
 # missingJobsCount = totalJobs - (completedJobsCount + failedJobsCount + pendingJobsCount)
 # print("Missing mfs:" + str(missingJobsCount))
 
-# print(r.get((jobId+":C2Br2IH:stderr")))
-# print(r.get('dbe40224-bb77-477b-a208-9a036d7f8544:'))
-# print(r.lrange('surge_jobs', 0, -1))
-
 # Export output
 parsedKeys=[]
-exportJobId = str('8cfa67bb-476f-4544-af77-11a252b13dff')
+exportJobId = str('7acadc37-0a46-4d04-a999-f0c6eea0357e')
 r.delete(exportJobId + ':failed')
 r.delete(exportJobId + ':completed')
 jobOutputFile = open("logs/" + exportJobId + '.txt',"a+")
-with open("./formulae/formulaeMax10HA.txt") as f:
+with open("./formulae/formulaeMax11HA.txt") as f:
     lines = f.readlines()
     nkey = exportJobId
     for mfs in chunks(lines, 500):
