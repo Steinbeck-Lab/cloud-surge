@@ -13,10 +13,10 @@ spec:
         image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
         resources:
           requests:
-            ephemeral-storage: "4Gi"
+            ephemeral-storage: "16Gi"
             cpu: 1000m
           limits:
-            ephemeral-storage: "4Gi"
+            ephemeral-storage: "16Gi"
             cpu: 1000m
         volumeMounts:
         - name: service-account-credentials-volume

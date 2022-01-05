@@ -11,7 +11,8 @@ a5f66062-95b0-4611-8b58-b6d005ce1700: 8HA ~ 20
 8cfa67bb-476f-4544-af77-11a252b13dff: 10HA (2CPU) ~ 100
 1dc6de65-37a1-496b-a993-63e3d1414bd8: 11HA (1CPU) ~ 100 ~ 37mins
 7acadc37-0a46-4d04-a999-f0c6eea0357e: 11HA (2CPU) ~ 100 ~ 27mins ??
-
+a313c5f4-0b30-408b-945d-dd4b5a22a324: 12HA (1CPU) ~ 100 ~ failed (ephemeral storage limit reached 4g)
+b27dc908-a5a3-4333-bfc9-c1a56e2d443c: 12HA (1CPU) ~ 100 ~ 16g
 
 Redis:
 
