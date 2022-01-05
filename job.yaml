@@ -14,10 +14,10 @@ spec:
         resources:
           requests:
             ephemeral-storage: "16Gi"
-            cpu: 1000m
+            cpu: 2000m
           limits:
             ephemeral-storage: "16Gi"
-            cpu: 1000m
+            cpu: 2000m
         volumeMounts:
         - name: service-account-credentials-volume
           mountPath: /etc/gcp
