@@ -15,6 +15,7 @@ a5f66062-95b0-4611-8b58-b6d005ce1700: 8HA ~ 20
 a313c5f4-0b30-408b-945d-dd4b5a22a324: 12HA (1CPU) ~ 100 ~ failed (ephemeral storage limit reached 4g)
 b27dc908-a5a3-4333-bfc9-c1a56e2d443c: 12HA (1CPU) ~ 100 ~ 16g es 
 b44c4a6d-bbaf-43e7-b23c-27ecdd6284b4: 12HA (2CPU) ~ 100 ~ 16g es (199065)
+e2a783f7-9553-4c1e-8890-b354ed3ff520: 13HA only (2CPU) ~ 100 ~ 16g es (127519)
 ```
 
 outputfolder: logs (mf,start time, endtime, stdout, stderr, upload start, upload end, filesize)
@@ -48,21 +49,34 @@ Any limitations because of our job deployment architecture
 Redis:
 
 App
-kubectl apply -f ./redis/redis-pod.yaml
+```kubectl apply -f ./redis/redis-pod.yaml```
 
 Service
+```
 kubectl apply -f ./redis/redis-service.yaml
-
+```
+Port forwarding to access from cloudshell
+```
 kubectl port-forward redis-master 6379:6379
+```
 
+Building the worker container and pushing the image to google artifact registry
+
+```
 docker build -t surge-peq .
 
 docker tag surge-peq us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
 
 docker push us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
+```
 
+```
 kubectl run -i --tty temp --image us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq:latest --command "/bin/sh"
+```
 
+Miscellaneous commands
+
+```
 kubectl exec --stdin --tty surge-job-wq-kftlf -- /bin/bash
 
 kubectl describe jobs/surge-job-wq
@@ -78,6 +92,7 @@ kubectl delete jobs `kubectl get jobs -o custom-columns=:.metadata.name`
 kubectl get pods --all-namespaces | grep Evicted | awk '{print $2, "--namespace", $1}' | xargs kubectl delete pod
 
 kubectl get svc --all-namespaces -o json | jq '.items[] | {name:.metadata.name, ns:.metadata.namespace, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.ns)/\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
+```
 
 **Links**
 

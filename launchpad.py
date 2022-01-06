@@ -19,7 +19,7 @@ job_id = uuid.uuid4()
 # print(job_id)
 
 mf = []
-with open("./formulae/formulaeMax12HA.txt") as f:
+with open("./formulae/13HAonly.txt") as f:
     lines = f.readlines()
     for line in lines:
         mf.append(line.rstrip() + "_" + str(job_id))
@@ -30,7 +30,7 @@ totalJobs = len(mf)
 # pendingJobs = r.lrange('surge_jobs', 0, -1)
 # print(len(pendingJobs))
 
-jobId = "b44c4a6d-bbaf-43e7-b23c-27ecdd6284b4"
+jobId = "e2a783f7-9553-4c1e-8890-b354ed3ff520"
 print("Job id:" + str(jobId))
 pendingJobs = r.lrange('surge_jobs', 0, -1)
 pendingJobsCount = len(pendingJobs)
@@ -45,9 +45,9 @@ print("Failed mfs:" + str(failedJobsCount))
 processingJobsCount = totalJobs - (completedJobsCount + failedJobsCount + pendingJobsCount)
 print("Lease / processing mfs:" + str(processingJobsCount))
 
-# # Export output
+# Export output
 # parsedKeys=[]
-# exportJobId = str('b27dc908-a5a3-4333-bfc9-c1a56e2d443c')
+# exportJobId = str('b44c4a6d-bbaf-43e7-b23c-27ecdd6284b4')
 # r.delete(exportJobId + ':failed')
 # r.delete(exportJobId + ':completed')
 # jobOutputFile = open("logs/" + exportJobId + '.csv',"a+")
