@@ -14,7 +14,7 @@ a5f66062-95b0-4611-8b58-b6d005ce1700: 8HA ~ 20
 7acadc37-0a46-4d04-a999-f0c6eea0357e: 11HA (2CPU) ~ 100 ~ 27mins ??
 a313c5f4-0b30-408b-945d-dd4b5a22a324: 12HA (1CPU) ~ 100 ~ failed (ephemeral storage limit reached 4g)
 b27dc908-a5a3-4333-bfc9-c1a56e2d443c: 12HA (1CPU) ~ 100 ~ 16g es 
-b44c4a6d-bbaf-43e7-b23c-27ecdd6284b4: 12HA (2CPU) ~ 100 ~ 16g es (199065)
+b44c4a6d-bbaf-43e7-b23c-27ecdd6284b4: 12HA (1.5CPU) ~ 100 ~ 16g es (199065)
 e2a783f7-9553-4c1e-8890-b354ed3ff520: 13HA only (2CPU) ~ 100 ~ 16g es (127519)
 ```
 
