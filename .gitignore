@@ -1,2 +1,4 @@
 secrets.yaml
+logs/*
+output/*
 __pycache__

@@ -1,23 +1,27 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: surge-job-wq
+  name: surge-job-wq-14ha-only-wfa
 spec:
-  parallelism: 100
+  ttlSecondsAfterFinished: 10
+  parallelism: 400
+  backoffLimit: 10
   template:
     metadata:
-      name: surge-job-wq
+      name: surge-job-wq-14ha-only-wfa
     spec:
       containers:
       - name: c
-        image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
+        image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq-ss
         resources:
           requests:
-            ephemeral-storage: "16Gi"
-            cpu: 1500m
+            ephemeral-storage: "5Gi"
+            memory: 2048Mi
+            cpu: 2000m
           limits:
-            ephemeral-storage: "16Gi"
-            cpu: 1500m
+            ephemeral-storage: "5Gi"
+            memory: 2048Mi
+            cpu: 2000m
         volumeMounts:
         - name: service-account-credentials-volume
           mountPath: /etc/gcp
