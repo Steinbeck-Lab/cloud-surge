@@ -4,14 +4,13 @@ import uuid
 from google.cloud import storage
 import json
 
-r = redis.Redis(
-    host='127.0.0.1',
-    port=6379,
-    password='')
+r = redis.Redis(host="127.0.0.1", port=6379, password="")
+
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
-        yield lst[i:i + n]
+        yield lst[i : i + n]
+
 
 # r.delete('surge_jobs')
 # r.delete('surge_jobs:processing')
@@ -40,17 +39,19 @@ totalJobs = len(mf)
 
 jobId = job_id
 print("Job id:" + str(jobId))
-pendingJobs = r.lrange('surge_jobs', 0, -1)
+pendingJobs = r.lrange("surge_jobs", 0, -1)
 pendingJobsCount = len(pendingJobs)
 print("Pending mfs:" + str(pendingJobsCount))
-completedJobs = r.lrange(jobId + ':completed', 0, -1)
+completedJobs = r.lrange(jobId + ":completed", 0, -1)
 completedJobsCount = len(completedJobs)
 print("Completed mfs:" + str(completedJobsCount))
-failedJobs = r.lrange(jobId + ':failed', 0, -1)
+failedJobs = r.lrange(jobId + ":failed", 0, -1)
 # print(failedJobs)
 failedJobsCount = len(failedJobs)
 print("Failed mfs:" + str(failedJobsCount))
-processingJobsCount = totalJobs - (completedJobsCount + failedJobsCount + pendingJobsCount)
+processingJobsCount = totalJobs - (
+    completedJobsCount + failedJobsCount + pendingJobsCount
+)
 print("Lease / processing mfs:" + str(processingJobsCount))
 
 # # # Export output
