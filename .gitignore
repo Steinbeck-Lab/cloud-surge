@@ -3,3 +3,8 @@ logs/*
 output/*
 __pycache__
 .ipynb_checkpoints
+
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+node_modules

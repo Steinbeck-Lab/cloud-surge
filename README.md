@@ -1,71 +1,44 @@
-bucket: steinbeck-surge-results
+<p align="center"><a href="https://steinbeck-lab.github.com/cloud-surge" target="_blank"><img src="/docs/public/cloud-surge.png" width="400" alt="CMS Logo"></a></p>  
 
-```
-gsutil -m cp -r "gs://steinbeck-surge-results/<jobid>/" .
-gsutil -m cp -r "gs://steinbeck-surge-results/1dc6de65-37a1-496b-a993-63e3d1414bd8/" .
-```
+[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIT)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-blue.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/graphs/commit-activity)
+[![GitHub issues](https://img.shields.io/github/issues/Steinbeck-Lab/cloud-surge.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/issues/)
+[![GitHub contributors](https://img.shields.io/github/contributors/Steinbeck-Lab/cloud-surge.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/graphs/contributors/)
+[![Powered by CDK](https://img.shields.io/badge/Powered%20by-CDK-blue.svg?style=flat&logo=chem)](https://cdk.github.io)
 
-**Commands**
+## Overview of Cloud Surge
 
-Redis:
+To demonstrate the efficient utilization of Surge in cloud environments, we provide a set of Docker images and Google Cloud Platform configurations for constructing large databases using Cloud Surge
 
-App
-```
-kubectl apply -f ./redis/redis-pod.yaml
-```
-Service
-```
-kubectl apply -f ./redis/redis-service.yaml
-```
-Port forwarding to access from cloudshell
-```
-kubectl port-forward redis-master 6379:6379
-```
+## Documentation
 
-Building the worker container and pushing the image to google artifact registry
+https://steinbeck-lab.github.com/cloud-surge
 
-```
-docker build -t surge-peq .
-docker tag surge-peq us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
-docker push us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
-```
+## Installation
 
-```
-docker build -t surge-peq-ss .
-docker tag surge-peq-ss us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq-ss
-docker push us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq-ss
-```
+You can run Cheminformatics Microservice as a standalone application using Python virtual environment or via Docker, or deploy to a Kubernetes cluster utilising [Helm charts](https://github.com/NFDI4Chem/repo-helm-charts/tree/main/charts). Please follow the links below for step-by-step instructions.
 
-```
-kubectl run -i --tty temp --image us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq:latest --command "/bin/sh"
-```
+**Docker**
+https://docs.api.naturalproducts.net/docker.html
 
-Miscellaneous commands
+**Kubernetes - Cluster deployment**
+https://docs.api.naturalproducts.net/cluster-deployment.html
 
-```
-kubectl exec --stdin --tty surge-job-wq-kftlf -- /bin/bash
+**Standalone**
+https://docs.api.naturalproducts.net/standalone.html
 
-kubectl describe jobs/surge-job-wq
+## License
 
-kubectl apply -f ./job.yaml
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Steinbeck-Lab/cloud-surge/blob/main/LICENSE) file for details
 
-kubectl apply -f ./secrets.yaml
+## Maintained by
 
-kubectl delete pod/temp
+[Cloud Surge]() and [Surge](https://structuregenerator.github.io/) are developed and maintained by the [Steinbeck group](https://cheminf.uni-jena.de) at the [Friedrich Schiller University](https://www.uni-jena.de/en/) Jena, Germany. 
+The code for this web application is released under the [MIT license](https://opensource.org/licenses/MIT).
+<p align="center"><a href="https://cheminf.uni-jena.de/" target="_blank"><img src="https://github.com/Kohulan/DECIMER-Image-to-SMILES/blob/master/assets/CheminfGit.png" width="800" alt="cheminf Logo"></a></p>
 
-kubectl delete jobs `kubectl get jobs -o custom-columns=:.metadata.name`
+## Acknowledgments
 
-kubectl get pods --all-namespaces | grep Evicted | awk '{print $2, "--namespace", $1}' | xargs kubectl delete pod
+Funded by the [Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)](https://www.dfg.de/) under the [National Research Data Infrastructure – NFDI4Chem](https://nfdi4chem.de/) – Project number: **441958208**.
 
-kubectl get svc --all-namespaces -o json | jq '.items[] | {name:.metadata.name, ns:.metadata.namespace, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.ns)/\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
-```
-
-**Links**
-
-https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-
-https://github.com/StructureGenerator/surge
-
-https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/
-
-https://github.com/sneumann/CloudSurge
+<p align="left"><a href="https://www.dfg.de/" target="_blank"><img src="./docs/public/dfg_logo_schriftzug_blau_foerderung_en.gif" width="50%" alt="DFG Logo"></a></p>
