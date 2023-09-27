@@ -9,7 +9,9 @@
 
 ## Overview of Cloud Surge
 
-To demonstrate the efficient utilization of Surge in cloud environments, we provide a set of Docker images and Google Cloud Platform configurations for constructing large databases using Cloud Surge
+Massively parallel computation of chemical spaces in cloud environments with Surge.
+
+To demonstrate the efficient utilization of Surge in cloud environments such as GKE, we provide a set of Docker images, GKE Platform configurations and other scripts for constructing large databases.
 
 ## Documentation
 
