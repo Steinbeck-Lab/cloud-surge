@@ -1,10 +1,7 @@
 import redis
 import uuid
 
-r = redis.Redis(
-    host='127.0.0.1',
-    port=6379,
-    password='')
+r = redis.Redis(host="127.0.0.1", port=6379, password="")
 
 job_id = uuid.uuid4()
 
@@ -15,4 +12,4 @@ with open("./resources/formulae/14.txt") as f:
         mf.append(line.rstrip() + "_" + str(job_id))
 
 totalJobs = len(mf)
-r.lpush('surge_jobs', *mf)
+r.lpush("surge_jobs", *mf)
