@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Cloud Surge",
   description: "Massively parallel computation of chemical spaces in cloud environments with Surge",
+  base: "/cloud-surge/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
