@@ -5,6 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Steinbeck-Lab/cloud-surge.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/issues/)
 [![GitHub contributors](https://img.shields.io/github/contributors/Steinbeck-Lab/cloud-surge.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/graphs/contributors/)
 [![Powered by CDK](https://img.shields.io/badge/Powered%20by-CDK-blue.svg?style=flat&logo=chem)](https://cdk.github.io)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8383954.svg)](https://doi.org/10.5281/zenodo.8383954)
 
 ## Overview of Cloud Surge
 
@@ -12,20 +13,15 @@ To demonstrate the efficient utilization of Surge in cloud environments, we prov
 
 ## Documentation
 
-https://steinbeck-lab.github.com/cloud-surge
+https://steinbeck-lab.github.io/cloud-surge/
 
 ## Installation
 
-You can run Cheminformatics Microservice as a standalone application using Python virtual environment or via Docker, or deploy to a Kubernetes cluster utilising [Helm charts](https://github.com/NFDI4Chem/repo-helm-charts/tree/main/charts). Please follow the links below for step-by-step instructions.
+todo
 
-**Docker**
-https://docs.api.naturalproducts.net/docker.html
+## Citation
 
-**Kubernetes - Cluster deployment**
-https://docs.api.naturalproducts.net/cluster-deployment.html
-
-**Standalone**
-https://docs.api.naturalproducts.net/standalone.html
+Venkata, C., Yirik, M. A., Sharma, N., Rajan, K., McKay, B. D., Neumann, S., & Steinbeck, C. (2023). cloud-surge (Version v1.0.0-beta) [Computer software]. https://doi.org/10.5281/zenodo.8383954
 
 ## License
 
