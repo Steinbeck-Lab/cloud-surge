@@ -31,7 +31,8 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 [Cloud Surge]() and [Surge](https://structuregenerator.github.io/) are developed and maintained by the [Steinbeck group](https://cheminf.uni-jena.de) at the [Friedrich Schiller University](https://www.uni-jena.de/en/) Jena, Germany. 
 The code for this web application is released under the [MIT license](https://opensource.org/licenses/MIT).
-<p align="center"><a href="https://cheminf.uni-jena.de/" target="_blank"><img src="https://github.com/Kohulan/DECIMER-Image-to-SMILES/blob/master/assets/CheminfGit.png" width="800" alt="cheminf Logo"></a></p>
+<p align="center"><a href="https://cheminf.uni-jena.de/" target="_blank"><img src="https://github.com/Kohulan/DECIMER-Image-to-SMILES/blob/master/assets/CheminfGit.png" style="width:40%" alt="cheminf Logo"></a>&nbsp;&nbsp;
+<a href="https://cheminf.uni-jena.de/" target="_blank"><img src="https://camo.githubusercontent.com/1736b9dabfdc9336e43f2fd95f41345d6da6485d274f314e0d5848ad8361d8ec/68747470733a2f2f7777772e6e666469346368656d2e64652f77702d636f6e74656e742f7468656d65732f77707468656d652f6173736574732f696d672f6c6f676f2e737667" style="width:40%" alt="NFDI4Chem Logo"></a></p>
 
 ## Acknowledgments
 
