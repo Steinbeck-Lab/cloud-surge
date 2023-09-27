@@ -17,7 +17,9 @@ https://steinbeck-lab.github.io/cloud-surge/
 
 ## Installation
 
-todo
+GKE Deployment Instructions: https://steinbeck-lab.github.io/cloud-surge/deployment.html
+
+Local setup: https://steinbeck-lab.github.io/cloud-surge/installation.html
 
 ## Citation
 
