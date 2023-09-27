@@ -29,7 +29,9 @@ Venkata, C., Yirik, M. A., Sharma, N., Rajan, K., McKay, B. D., Neumann, S., & S
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/Steinbeck-Lab/cloud-surge/blob/main/LICENSE) file for details
+[Surge](https://github.com/StructureGenerator/surge) - [Apache-2.0 license](https://github.com/StructureGenerator/surge/blob/main/LICENSE)
+
+This project ([Cloud - Surge](https://github.com/Steinbeck-Lab/cloud-surge)) is licensed under the MIT License - see the [LICENSE](https://github.com/Steinbeck-Lab/cloud-surge/blob/main/LICENSE) file for details
 
 ## Maintained by
 
