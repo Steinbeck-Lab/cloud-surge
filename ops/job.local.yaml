@@ -5,7 +5,7 @@ metadata:
 spec:
   ttlSecondsAfterFinished: 10
   parallelism: 1
-  backoffLimit: 10
+  backoffLimit: 10000000
   template:
     metadata:
       name: surge-job-wq
@@ -22,4 +22,6 @@ spec:
             ephemeral-storage: "5Gi"
             memory: 2048Mi
             cpu: 2000m
+      - name: cheminformatics-microservice
+        image: nfdi4chem/cheminformatics-microservice:lite
       restartPolicy: OnFailure

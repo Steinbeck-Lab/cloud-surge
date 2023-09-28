@@ -9,6 +9,8 @@ from datetime import datetime
 import json
 import threading
 import zipfile
+import requests
+from urllib.parse import quote
 
 host = "redis"
 bucket_name = "steinbeck-surge-results"
@@ -85,24 +87,30 @@ while not q.empty():
         totalStructuresCount = 0
         currentIterCount = 0
         for line in iter(process.stdout.readline, b""):
-            if currentIterCount < 10000000:
-                smilesData.append(line.decode("utf-8").rstrip())
-                currentIterCount += 1
-            else:
-                smilesData.append(line.decode("utf-8").rstrip())
-                currentIterCount += 1
-                ofile = mf + "_" + str(i)
-                zf = zipfile.ZipFile(
-                    ofile + ".zip", mode="w", compression=zipfile.ZIP_DEFLATED
-                )
-                zf.writestr(ofile + ".smi", "\n".join(smilesData))
-                zf.close()
-                totalCompressedFileSize += os.stat(ofile + ".zip").st_size
-                i += 1
-                smilesData = []
-                totalStructuresCount += currentIterCount
-                currentIterCount = 0
-                upload_blob_parallel(bucket_name, ofile + ".zip", job)
+            # Apply filters
+            # NPLikeness in between − 2.31 and 5.15
+            smiles = line.decode("utf-8").rstrip()
+            url = "http://localhost:80/latest/chem/nplikeness/score?smiles=" + quote(smiles)
+            nplikeness_score = float(requests.request("GET", url).text)
+            if 0 <= nplikeness_score + 2.31 <= 7.46:
+                if currentIterCount < 10000000:
+                    smilesData.append(smiles)
+                    currentIterCount += 1
+                else:
+                    smilesData.append(smiles)
+                    currentIterCount += 1
+                    ofile = mf + "_" + str(i)
+                    zf = zipfile.ZipFile(
+                        ofile + ".zip", mode="w", compression=zipfile.ZIP_DEFLATED
+                    )
+                    zf.writestr(ofile + ".smi", "\n".join(smilesData))
+                    zf.close()
+                    totalCompressedFileSize += os.stat(ofile + ".zip").st_size
+                    i += 1
+                    smilesData = []
+                    totalStructuresCount += currentIterCount
+                    currentIterCount = 0
+                    upload_blob_parallel(bucket_name, ofile + ".zip", job)
         remainingSmilesLength = len(smilesData)
         if remainingSmilesLength > 0:
             totalStructuresCount += remainingSmilesLength
