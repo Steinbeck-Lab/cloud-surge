@@ -1,8 +1,8 @@
 # Deployment configurations
 
-## Redis deployment (yaml files)
+## **Start a storage service**
 
-### Pod configuration
+### Redis deployment (yaml files)
 
 ```
 apiVersion: v1
@@ -22,10 +22,10 @@ spec:
         - containerPort: 6379
 ```
 
-App
+Apply this configuration to deploy the pod
 
 ```
-kubectl apply -f ./redis-pod.yaml
+kubectl apply -f ./ops/redis/redis-pod.yaml
 ```
 
 ### Service configuration
@@ -43,41 +43,93 @@ spec:
     app: redis
 ```
 
-
 Service
 
 ```
-kubectl apply -f ./redis-service.yaml
+kubectl apply -f ./ops/redis/redis-service.yaml
 ```
 
-Port forwarding to access from cloudshell
+Port forwarding to access from cloudshell (Optional)
 
 ```
 kubectl port-forward redis-master 6379:6379
 ```
 
+Use the launchpad.py script to connect to Redis and then populate the queue with the tasks.
+
 ## Jobs deployment
 
-Building the worker container and pushing the image to google artifact registry
+Build the worker container and push the image to google artifact registry or docker hub
 
 ```
-docker build -t surge-peq .
+cd ./ops
+docker build -t cloud-surge .
 docker tag surge-peq us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
 docker push us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
 ```
 
+*Test if the pod is running*
 ```
 kubectl run -i --tty temp --image us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq:latest --command "/bin/sh"
 ```
 
+### Job yaml file
+
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: surge-job-wq-14ha
+spec:
+  ttlSecondsAfterFinished: 10
+  parallelism: 400
+  backoffLimit: 10
+  template:
+    metadata:
+      name: surge-job-wq-14ha
+    spec:
+      containers:
+      - name: c
+        image: us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq
+        resources:
+          requests:
+            ephemeral-storage: "5Gi"
+            memory: 2048Mi
+            cpu: 2000m
+          limits:
+            ephemeral-storage: "5Gi"
+            memory: 2048Mi
+            cpu: 2000m
+        volumeMounts:
+        - name: service-account-credentials-volume
+          mountPath: /etc/gcp
+          readOnly: true
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/gcp/sa_credentials.json
+      volumes:
+      - name: service-account-credentials-volume
+        secret:
+          secretName: surge-service-account-credentials
+          items:
+          - key: sa_json
+            path: sa_credentials.json
+      restartPolicy: OnFailure
+```
+
+```
+kubectl apply -f ./job.yaml
+```
+
+```
+kubectl apply -f ./secrets.yaml
+```
+
+*Helper Commands*
 ```
 kubectl exec --stdin --tty surge-job-wq-kftlf -- /bin/bash
 
 kubectl describe jobs/surge-job-wq
-
-kubectl apply -f ./job.yaml
-
-kubectl apply -f ./secrets.yaml
 
 kubectl delete pod/temp
 
@@ -95,12 +147,3 @@ https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 https://github.com/StructureGenerator/surge
 
 https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/
-
-
-```
-kubectl apply -f ./job.yaml
-```
-
-```
-kubectl apply -f ./secrets.yaml
-```
