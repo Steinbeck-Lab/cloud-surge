@@ -46,5 +46,8 @@ Here is an overview of the steps in this architecture:
 
 <img  src="/architecture.png" alt="Cloud Surge Logo" style="width: 100vw">
 
-In the Kubernetes cluster, the process starts with the input list of molecular formulae. Redis queue is filled with the "tasks". In our case, our tasks are molecular formulae to be used for Surge computation.
-launchpad.py file, the jobid.csv is set, then the input molecular formulae are stored in the queue service. As the queue service, Redis is used. Redis is a data structure storage used as a database to store the input data. The software provides different data types such as hashes, strings, and lists. Molecular formulae lists are stored in Redis as the queue service to call each job. For each molecular formula, the worker.py is run until there is no formula left in the queue service. The jobs’ output files are stored in the Google bucket with the start time and end time of the surge run and the file upload time separately. The output SMI file sizes are also stored in the output files for each molecular formula.
+To begin the process in the Kubernetes cluster, a list of molecular formulae is created based on the heavy atom count. CDK is used to generate these formulae, which are then saved in a text file. The next step is to queue these formulae for a worker to execute Surge and generate chemical graph enumerations. Redis is utilized as the queue service, with the tasks being filled with the instructions to use Surge for enumerating all possible chemical graphs for a specific molecular formula.
+
+The launchpad.py, with its Redis client, populates the queue with the extensive list of molecular formulae (and unique job_id) ready to be processed by the workers.
+
+The workers in the pod are run until there is no formula left in the queue service. The jobs’ output files (10 million structures in each file ~ 30Mb zip files) are stored in the Google bucket. The start and end times of the Surge run and the file upload time are tracked in the Redis key-value store. The output SMI file sizes are also stored in the output files for each molecular formula.
