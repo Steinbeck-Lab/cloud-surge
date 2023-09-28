@@ -48,7 +48,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./ops
           file: ./ops/Dockerfile  
           push: true
           tags: ${{ env.REPOSITORY_NAMESPACE }}/${{ env.REPOSITORY_NAME }}:${{ steps.fetch-latest-release.outputs.tag_name }}
