@@ -52,6 +52,7 @@ export default defineConfig({
       {
         text: 'Development',
         items: [
+          { text: 'Local Installation', link: '/installation' },
           { text: 'GitHub Actions', link: '/actions' },
           { text: 'Contributors', link: '/contributors' }
         ]

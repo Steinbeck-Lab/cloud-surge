@@ -22,18 +22,4 @@ spec:
             ephemeral-storage: "5Gi"
             memory: 2048Mi
             cpu: 2000m
-        volumeMounts:
-        - name: service-account-credentials-volume
-          mountPath: /etc/gcp
-          readOnly: true
-        env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /etc/gcp/sa_credentials.json
-      volumes:
-      - name: service-account-credentials-volume
-        secret:
-          secretName: surge-service-account-credentials
-          items:
-          - key: sa_json
-            path: sa_credentials.json
       restartPolicy: OnFailure
