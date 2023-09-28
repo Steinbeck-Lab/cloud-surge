@@ -35,20 +35,24 @@ export default defineConfig({
           { text: 'Screening', link: '/screening' },
         ]
       },
-      {
-        text: 'Analysis',
-        items: [
-          { text: 'Datasets', link: '/datasets' },
-          { text: 'Formats', link: '/formats' },
-          { text: 'Runtimes', link: '/runtimes' },
-        ]
-      },
+     // {
+      //   text: 'Google Cloud - GKE',
+      //   items: [
+      //     { text: 'Guides', link: '/guides' },
+      //   ]
+      // },
+      // {
+      //   text: 'Analysis',
+      //   items: [
+      //     { text: 'Datasets', link: '/datasets' },
+      //     { text: 'Formats', link: '/formats' },
+      //     { text: 'Runtimes', link: '/runtimes' },
+      //   ]
+      // },
       {
         text: 'Development',
         items: [
-          { text: 'Local Setup', link: '/installation' },
-          { text: 'License', link: '/license' },
-          { text: 'Issues/Feature requests', link: '/issues' },
+          { text: 'GitHub Actions', link: '/actions' },
           { text: 'Contributors', link: '/contributors' }
         ]
       }
