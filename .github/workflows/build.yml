@@ -11,12 +11,12 @@ name : Dev Build and Publish
 
 on:
   push:
-    branches: [main]
+    branches: [development]
 
 env:
   DOCKER_HUB_USERNAME : ${{ secrets.DOCKER_HUB_USERNAME  }}
   DOCKER_HUB_PASSWORD : ${{ secrets.DOCKER_HUB_PASSWORD  }}
-  REPOSITORY_NAME: cheminformatics-microservice
+  REPOSITORY_NAME: cloud-surge
   REPOSITORY_NAMESPACE: nfdi4chem
 
 jobs:
