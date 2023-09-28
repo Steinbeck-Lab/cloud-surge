@@ -10,8 +10,8 @@
 name : Dev Build and Publish
 
 on:
-  push:
-    branches: [development]
+  release:
+    types: [published]
 
 env:
   DOCKER_HUB_USERNAME : ${{ secrets.DOCKER_HUB_USERNAME  }}
