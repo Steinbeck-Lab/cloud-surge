@@ -1,8 +1,10 @@
 # Docker containers
 
-GCP provides a range of functionalities and engines, including the Google Kubernetes Engine (GKE), which is used for running containerized applications.
+Google Cloud Platform provides a range of functionalities and engines, including the Google Kubernetes Engine (GKE), which is used for running containerized applications.
 
-To demonstrate the efficient utilization of Surge in cloud environments, we provide a set of Docker images and Google Cloud Platform configurations for constructing large databases using Surge as a case study. In this case study, we construct the largest publicly available molecular database, comprising molecules with a maximum of 14 heavy atoms.
+To demonstrate the efficient utilization of Surge in cloud environments, we provide a set of Docker images and Google Kubernetes Engine (GKE) configurations for constructing large databases using Surge as a case study. In this case study, we constructed the largest publicly available molecular database, comprising molecules with a maximum of 14 heavy atoms.
+
+**Surge**
 
 ```
 # Build Surge from source code using Nauty
@@ -39,7 +41,7 @@ COPY surge/src/Makefile $NAUTY_HOME
 RUN make -f Makefile clean ; make -f Makefile surge
 ```
 
-Build Surge binary is then copied to a new image with the worker scripts to run the tasks in the queue
+Built Surge binary is then copied to a new image with the worker scripts to run the tasks in the queue
 
 ```
 # Install required packages
@@ -86,4 +88,7 @@ COPY ./rediswq.py /rediswq.py
 CMD ["python3", "worker.py"]
 ```
 
-These docker images are available on Docker hub
+This docker image contains the surge build and all the necessary scripts to run workers.
+
+Users can extend the docker file to customise the container or download the Docker image(s) from the Docker hub
+
