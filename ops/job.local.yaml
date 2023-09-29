@@ -4,24 +4,41 @@ metadata:
   name: surge-job-wq
 spec:
   ttlSecondsAfterFinished: 10
-  parallelism: 1
-  backoffLimit: 10000000
+  parallelism: 3
+  backoffLimit: 10
   template:
     metadata:
       name: surge-job-wq
     spec:
+      shareProcessNamespace: true
       containers:
       - name: cloud-surge
         image: nfdi4chem/cloud-surge:v1.0.0-beta
+        imagePullPolicy: Always
         resources:
           requests:
-            ephemeral-storage: "5Gi"
+            ephemeral-storage: "10Gi"
             memory: 2048Mi
             cpu: 2000m
           limits:
-            ephemeral-storage: "5Gi"
+            ephemeral-storage: "10Gi"
             memory: 2048Mi
             cpu: 2000m
+        volumeMounts:
+        - name: service-account-credentials-volume
+          mountPath: /etc/gcp
+          readOnly: true
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/gcp/sa_credentials.json
       - name: cheminformatics-microservice
         image: nfdi4chem/cheminformatics-microservice:lite
+        imagePullPolicy: Always
+      volumes:
+      - name: service-account-credentials-volume
+        secret:
+          secretName: surge-service-account-credentials
+          items:
+          - key: sa_json
+            path: sa_credentials.json
       restartPolicy: OnFailure
