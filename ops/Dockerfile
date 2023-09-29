@@ -64,6 +64,7 @@ RUN pip install --upgrade oauth2client
 
 # Install redis client using pip
 RUN pip install redis
+RUN pip install requests
 
 # Copy surge binary from build image to usr bin folder
 COPY --from=build /root/nauty27r3/surge /usr/bin

@@ -11,6 +11,7 @@ import threading
 import zipfile
 import requests
 from urllib.parse import quote
+import subprocess
 
 host = "redis"
 bucket_name = "steinbeck-surge-results"
@@ -75,7 +76,7 @@ while not q.empty():
         start = getTimeStamp()
         # Run surge with filters
         process = Popen(
-            ["surge", "-P", "-T", "-B1,2,3,4,5,7,9", "-t0", "-f0", "-S", mf],
+            ["surge", "-P", "-T", "-B1,2,3,4,5,7,8,9", "-t0", "-f0", "-S", mf],
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -90,27 +91,30 @@ while not q.empty():
             # Apply filters
             # NPLikeness in between − 2.31 and 5.15
             smiles = line.decode("utf-8").rstrip()
-            url = "http://localhost:80/latest/chem/nplikeness/score?smiles=" + quote(smiles)
-            nplikeness_score = float(requests.request("GET", url).text)
-            if 0 <= nplikeness_score + 2.31 <= 7.46:
-                if currentIterCount < 10000000:
-                    smilesData.append(smiles)
-                    currentIterCount += 1
-                else:
-                    smilesData.append(smiles)
-                    currentIterCount += 1
-                    ofile = mf + "_" + str(i)
-                    zf = zipfile.ZipFile(
-                        ofile + ".zip", mode="w", compression=zipfile.ZIP_DEFLATED
-                    )
-                    zf.writestr(ofile + ".smi", "\n".join(smilesData))
-                    zf.close()
-                    totalCompressedFileSize += os.stat(ofile + ".zip").st_size
-                    i += 1
-                    smilesData = []
-                    totalStructuresCount += currentIterCount
-                    currentIterCount = 0
-                    upload_blob_parallel(bucket_name, ofile + ".zip", job)
+            try:
+                url = "http://localhost:80/latest/chem/nplikeness/score?smiles=" + quote(smiles)
+                nplikeness_score = float(requests.request("GET", url).text)
+                if 0 <= nplikeness_score + 2.31 <= 7.46:
+                    if currentIterCount < 10000000:
+                        smilesData.append(smiles)
+                        currentIterCount += 1
+                    else:
+                        smilesData.append(smiles)
+                        currentIterCount += 1
+                        ofile = mf + "_" + str(i)
+                        zf = zipfile.ZipFile(
+                            ofile + ".zip", mode="w", compression=zipfile.ZIP_DEFLATED
+                        )
+                        zf.writestr(ofile + ".smi", "\n".join(smilesData))
+                        zf.close()
+                        totalCompressedFileSize += os.stat(ofile + ".zip").st_size
+                        i += 1
+                        smilesData = []
+                        totalStructuresCount += currentIterCount
+                        currentIterCount = 0
+                        upload_blob_parallel(bucket_name, ofile + ".zip", job)
+            except:
+                print("error")
         remainingSmilesLength = len(smilesData)
         if remainingSmilesLength > 0:
             totalStructuresCount += remainingSmilesLength
@@ -155,4 +159,14 @@ while not q.empty():
             break
         else:
             retries += 1
+
+p = subprocess.Popen(['pgrep', '-f', 'app.main:app'], stdout=subprocess.PIPE)
+out, err = p.communicate()
+for line in out.splitlines():
+    line = bytes.decode(line)
+    pid = int(line.split(None, 1)[0])
+    k = subprocess.Popen(['kill', str(pid)], stdout=subprocess.PIPE)
+    out, err = k.communicate()
+    print(out)
+    print(err)
 print("Queue empty, exiting")

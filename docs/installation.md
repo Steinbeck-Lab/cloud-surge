@@ -51,6 +51,25 @@ minikube stop
 ```
 This will shut down the virtual machine and the Kubernetes cluster.
 
+### Build docker image
+
+```
+docker build --no-cache -t <docker_image>:<tag> .
+
+# Push image to docker hub
+docker push <docker_image>:<tag>
+```
+
+Image pull policy
+
+```
+- name: cloud-surge
+    image:  <docker_image>:<tag>
+    imagePullPolicy: Always
+- name: cheminformatics-microservice
+    image: nfdi4chem/cheminformatics-microservice:lite
+    imagePullPolicy: Always
+```
 
 ### Start Redis app and expose the service
 
@@ -114,6 +133,11 @@ Completed mfs:0
 Failed mfs:0
 Lease / processing mfs:0
 ```
+### Apply secrets to upload files to google bucket
+
+```
+% kubectl apply -f ./secrets.yaml.example
+```
 
 ### Launch Jobs
 
@@ -155,6 +179,28 @@ Generates
 ops/logs/e18f9f54-579f-4374-a490-8ce4cc550141.csv file with runtimes and other stats
 
 ops/logs/failed-e18f9f54-579f-4374-a490-8ce4cc550141.txt file with failed molecular formulae
+
+### Download files from remote google cloud buckets
+
+Install gsutils from here  - https://cloud.google.com/storage/docs/gsutil_install
+
+```
+gsutil -m cp -r "gs://<bucket_name>/<jobid>/" .
+```
+
+### Loginto the container 
+
+```
+kubectl exec --stdin --tty surge-job-wq-<id> -c cloud-surge -- /bin/bash
+kubectl exec --stdin --tty surge-job-wq-<id> -c cheminformatics-microservice -- /bin/bash
+```
+
+### Check logs
+
+```
+kubectl logs surge-job-wq-<id> -c cloud-surge
+kubectl logs surge-job-wq-<id> -c cheminformatics-microservice
+```
 
 ### Delete Jobs
 
