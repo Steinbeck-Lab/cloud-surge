@@ -10,7 +10,11 @@ spec:
     metadata:
       name: surge-job-wq
     spec:
+      shareProcessNamespace: true
       containers:
+      - name: cheminformatics-microservice
+        image: nfdi4chem/cheminformatics-microservice:lite
+        imagePullPolicy: Always
       - name: cloud-surge
         image: nfdi4chem/cloud-surge:v1.0.0-beta
         resources:

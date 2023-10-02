@@ -14,7 +14,7 @@ from urllib.parse import quote
 import subprocess
 
 host = "redis"
-bucket_name = "steinbeck-surge-results"
+bucket_name = "surge-results"
 
 
 def upload_blob(bucket_name, source_file_name, destination_blob_name, job):

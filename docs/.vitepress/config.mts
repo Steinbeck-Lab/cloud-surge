@@ -35,12 +35,12 @@ export default defineConfig({
           { text: 'Screening', link: '/screening' },
         ]
       },
-     // {
-      //   text: 'Google Cloud - GKE',
-      //   items: [
-      //     { text: 'Guides', link: '/guides' },
-      //   ]
-      // },
+     {
+        text: 'Google Cloud - GKE',
+        items: [
+          { text: 'Guides', link: '/guides' },
+        ]
+      },
       // {
       //   text: 'Analysis',
       //   items: [
