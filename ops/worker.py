@@ -62,7 +62,7 @@ def getJSONString(job):
     return json.dumps(job)
 
 
-q = rediswq.RedisWQ(name="surge_jobs", host=host, port=6379, password="")
+q = rediswq.RedisWQ(name="surge_tasks", host=host, port=6379, password="")
 print("Worker with sessionID: " + q.sessionID())
 print("Initial queue state: empty=" + str(q.empty()))
 retries = 0
@@ -94,7 +94,7 @@ while not q.empty():
             try:
                 url = "http://localhost:80/latest/chem/nplikeness/score?smiles=" + quote(smiles)
                 nplikeness_score = float(requests.request("GET", url).text)
-                if 0 <= nplikeness_score + 2.31 <= 7.46:
+                if nplikeness_score > 0:
                     if currentIterCount < 10000000:
                         smilesData.append(smiles)
                         currentIterCount += 1

@@ -99,35 +99,35 @@ redis-master   1/1     Running   0          95s
 % cd ops
 
 % python launchpad.py --stats
-Pending Jobs Count: 0
-Processing Jobs Count: 0
+Pending Tasks Count: 0
+Processing Tasks Count: 0
 
 # load 9HA
 % python launchpad.py --mfs=./../resources/formulae/9.txt
-Loading jobs from input: ./../resources/formulae/9.txt
-Jobs Session ID: ab0d38f4-c18b-476b-9883-0dccb81af630
-Pending Jobs Count: 36977
-Processing Jobs Count: 0
+Loading tasks from input: ./../resources/formulae/9.txt
+Tasks Session ID: ab0d38f4-c18b-476b-9883-0dccb81af630
+Pending Tasks Count: 36977
+Processing Tasks Count: 0
 
 % python launchpad.py --stats                            
-Pending Jobs Count: 36977
-Processing Jobs Count: 0
+Pending Tasks Count: 36977
+Processing Tasks Count: 0
 
-# delete jobs
+# delete tasks
 % python launchpad.py --delete
-Pending Jobs Count: 0
-Processing Jobs Count: 0
+Pending Tasks Count: 0
+Processing Tasks Count: 0
 
 # load 7HA
 % python launchpad.py --mfs=./../resources/formulae/7.txt
-Loading jobs from input: ./../resources/formulae/7.txt
-Jobs Session ID: bc050f70-1a23-4b8c-aeaf-9c4b382b8726
-Pending Jobs Count: 9660
-Processing Jobs Count: 0
+Loading tasks from input: ./../resources/formulae/7.txt
+Tasks Session ID: bc050f70-1a23-4b8c-aeaf-9c4b382b8726
+Pending Tasks Count: 9660
+Processing Tasks Count: 0
 
-# Job stats
-% python launchpad.py --job=bc050f70-1a23-4b8c-aeaf-9c4b382b8726
-Job id:bc050f70-1a23-4b8c-aeaf-9c4b382b8726
+# session stats
+% python launchpad.py --session=bc050f70-1a23-4b8c-aeaf-9c4b382b8726
+Session id:bc050f70-1a23-4b8c-aeaf-9c4b382b8726
 Pending mfs:9660
 Completed mfs:0
 Failed mfs:0
@@ -151,12 +151,12 @@ redis-master         1/1     Running   0          15m
 surge-job-wq-8gh96   1/1     Running   0          34s
 
 % python launchpad.py --stats
-Pending Jobs Count: 3556
-Processing Jobs Count: 1
+Pending Tasks Count: 3556
+Processing Tasks Count: 1
 
 % python launchpad.py --stats
-Pending Jobs Count: 0
-Processing Jobs Count: 0
+Pending Tasks Count: 0
+Processing Tasks Count: 0
 
 % kubectl get pods           
 NAME                 READY   STATUS      RESTARTS   AGE
@@ -168,10 +168,10 @@ NAME           READY   STATUS    RESTARTS   AGE
 redis-master   1/1     Running   0          37m
 ```
 
-### Export Job Stats
+### Export Session - tasks stats
 
 ```
-python launchpad.py --mfs=./../resources/formulae/7.txt --job=fd82b265-2e2e-41b3-a670-3a52a032dd35 --export
+python launchpad.py --mfs=./../resources/formulae/7.txt --session=fd82b265-2e2e-41b3-a670-3a52a032dd35 --export
 ```
 
 Generates
@@ -185,7 +185,7 @@ ops/logs/failed-e18f9f54-579f-4374-a490-8ce4cc550141.txt file with failed molecu
 Install gsutils from here  - https://cloud.google.com/storage/docs/gsutil_install
 
 ```
-gsutil -m cp -r "gs://<bucket_name>/<jobid>/" .
+gsutil -m cp -r "gs://<bucket_name>/<session_id>/" .
 ```
 
 ### Loginto the container 
@@ -202,13 +202,13 @@ kubectl logs surge-job-wq-<id> -c cloud-surge
 kubectl logs surge-job-wq-<id> -c cheminformatics-microservice
 ```
 
-### Delete Jobs
+### Delete Tasks
 
 ```
 kubectl delete jobs `kubectl get jobs -o custom-columns=:.metadata.name`
 ```
 
-### Debugging
+### Debugging-
 
 *Get all images*
 

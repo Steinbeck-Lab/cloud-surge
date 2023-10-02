@@ -4,7 +4,7 @@ metadata:
   name: surge-job-wq
 spec:
   ttlSecondsAfterFinished: 10
-  parallelism: 3
+  parallelism: 1
   backoffLimit: 10
   template:
     metadata:

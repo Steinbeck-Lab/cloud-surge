@@ -4,7 +4,7 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser(
-    description="Load jobs to Cloud Surge  \
+    description="Load tasks to Cloud Surge  \
      Redis Queue"
 )
 parser.add_argument(
@@ -16,39 +16,39 @@ parser.add_argument(
     "--delete",
     default=False,
     action=argparse.BooleanOptionalAction,
-    help="Delete pending jobs",
+    help="Delete pending tasks",
 )
 parser.add_argument(
     "--export",
     default=False,
     action=argparse.BooleanOptionalAction,
-    help="Export job stats",
+    help="Export session stats",
 )
 parser.add_argument(
     "--stats",
     default=True,
     action=argparse.BooleanOptionalAction,
-    help="Display all jobs statistics",
+    help="Display all tasks statistics",
 )
-parser.add_argument("--job", type=str, help="Display the Job Statistics")
+parser.add_argument("--session", type=str, help="Display the tasks statistics")
 args = parser.parse_args()
 r = redis.Redis(host="127.0.0.1", port=6379, password="")
 
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
-        yield lst[i : i + n]
+        yield lst[i: i + n]
 
 
 if args.mfs:
     if args.export:
-        if args.job:
+        if args.session:
             parsedKeys = []
-            exportJobId = str(args.job)
-            jobOutputFile = open("logs/" + exportJobId + ".csv", "a+")
+            exportSessionId = str(args.session)
+            sessionOutputFile = open("logs/" + exportSessionId + ".csv", "a+")
             with args.mfs as input_file:
                 lines = input_file.readlines()
-                nkey = exportJobId
+                nkey = exportSessionId
                 for mfs in chunks(lines, 500):
                     smfs = []
                     for mf in mfs:
@@ -82,65 +82,63 @@ if args.mfs:
                                 .replace("\n", "|")
                                 .replace("\r", "|")
                             )
-                            jobOutputFile.write(",".join(list(mObj.values())) + "\n")
+                            sessionOutputFile.write(",".join(list(mObj.values())) + "\n")
                             # r.delete(key)
                             parsedKeys.append(nkey)
                         else:
                             print(mfd)
                     # print(len(parsedKeys))
-                jobOutputFile.close()
+                sessionOutputFile.close()
                 for key in r.scan_iter("*"):
                     r.delete(key)
                 mf = []
-                with args.mfs as input_file:
-                    lines = input_file.readlines()
-                    for line in lines:
-                        mf.append(line.rstrip())
+                for line in lines:
+                    mf.append(line.rstrip())
                 outMf = []
-                with open("logs/" + exportJobId + ".csv") as f:
+                with open("logs/" + exportSessionId + ".csv") as f:
                     lines = f.readlines()
                     for line in lines:
                         imf = line.rstrip().split(",")[0]
                         outMf.append(imf)
                 failedMF = list(set(outMf).symmetric_difference(set(mf)))
-                jobFailedOutputFile = open("logs/failed-" + exportJobId + ".txt", "a+")
+                tasksFailedOutputFile = open("logs/failed-" + exportSessionId + ".txt", "a+")
                 for fmf in failedMF:
-                    jobFailedOutputFile.write(fmf + "\n")
+                    tasksFailedOutputFile.write(fmf + "\n")
     else:
-        job_id = uuid.uuid4()
-        print("Loading jobs from input: %s" % args.mfs.name)
-        print("Jobs Session ID: %s" % job_id)
+        session_id = uuid.uuid4()
+        print("Loading tasks from input: %s" % args.mfs.name)
+        print("Tasks Session ID: %s" % session_id)
         mf = []
         with args.mfs as input_file:
             lines = input_file.readlines()
             for line in lines:
-                mf.append(line.rstrip() + "_" + str(job_id))
-        totalJobs = len(mf)
-        r.lpush("surge_jobs", *mf)
+                mf.append(line.rstrip() + "_" + str(session_id))
+        totalTasks = len(mf)
+        r.lpush("surge_tasks", *mf)
 
 if args.delete:
-    r.delete("surge_jobs")
+    r.delete("surge_tasks")
 
-if args.job:
-    jobId = args.job
-    print("Job id:" + str(jobId))
-    pendingJobs = r.lrange("surge_jobs", 0, -1)
-    pendingJobsCount = len(pendingJobs)
-    print("Pending mfs:" + str(pendingJobsCount))
-    completedJobs = r.lrange(jobId + ":completed", 0, -1)
-    completedJobsCount = len(completedJobs)
-    print("Completed mfs:" + str(completedJobsCount))
-    failedJobs = r.lrange(jobId + ":failed", 0, -1)
-    failedJobsCount = len(failedJobs)
-    print("Failed mfs:" + str(failedJobsCount))
-    processingJobsCount = completedJobsCount + failedJobsCount
-    +pendingJobsCount
-    print("Lease / processing mfs:" + str(processingJobsCount))
+if args.session:
+    sessionId = args.session
+    print("Session id:" + str(sessionId))
+    pendingTasks = r.lrange("surge_tasks", 0, -1)
+    pendingTasksCount = len(pendingTasks)
+    print("Pending mfs:" + str(pendingTasksCount))
+    completedTasks = r.lrange(sessionId + ":completed", 0, -1)
+    completedTasksCount = len(completedTasks)
+    print("Completed mfs:" + str(completedTasksCount))
+    failedTasks = r.lrange(sessionId + ":failed", 0, -1)
+    failedTasksCount = len(failedTasks)
+    print("Failed mfs:" + str(failedTasksCount))
+    processingTasksCount = completedTasksCount + failedTasksCount
+    +pendingTasksCount
+    print("Lease / processing mfs:" + str(processingTasksCount))
 else:
     if args.stats:
-        pendingJobs = r.lrange("surge_jobs", 0, -1)
-        pendingJobsCount = len(pendingJobs)
-        print("Pending Jobs Count: %s" % pendingJobsCount)
-        processingJobs = r.lrange("surge_jobs:processing", 0, -1)
-        processingJobsCount = len(processingJobs)
-        print("Processing Jobs Count: " + str(processingJobsCount))
+        pendingTasks = r.lrange("surge_tasks", 0, -1)
+        pendingTasksCount = len(pendingTasks)
+        print("Pending Tasks Count: %s" % pendingTasksCount)
+        processingTasks = r.lrange("surge_tasks:processing", 0, -1)
+        processingTasksCount = len(processingTasks)
+        print("Processing Tasks Count: " + str(processingTasksCount))
