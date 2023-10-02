@@ -12,6 +12,9 @@ spec:
     spec:
       shareProcessNamespace: true
       containers:
+      - name: cheminformatics-microservice
+        image: nfdi4chem/cheminformatics-microservice:lite
+        imagePullPolicy: Always
       - name: cloud-surge
         image: nfdi4chem/cloud-surge:v1.0.0-beta
         imagePullPolicy: Always
@@ -31,9 +34,6 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/gcp/sa_credentials.json
-      - name: cheminformatics-microservice
-        image: nfdi4chem/cheminformatics-microservice:lite
-        imagePullPolicy: Always
       volumes:
       - name: service-account-credentials-volume
         secret:
