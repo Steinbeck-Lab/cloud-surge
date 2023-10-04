@@ -166,3 +166,11 @@ html.dark img.only-on-light {
 html.dark img.only-on-dark {
   display: block;
 }
+
+.medium-zoom-overlay {
+  z-index: 100;
+}
+
+.medium-zoom-image {
+  z-index: 100;
+}
