@@ -79,8 +79,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present Steinbeck Lab'
+      message: 'Cloud-Surge: Code and configurations released under the MIT License | Surge: Source code releases under Apache License 2.0 <br/> Funded by the <a href="https://www.dfg.de/en/index.jsp" style="color: blue" target="_blank">Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)</a> under the <a href="https://www.nfdi4chem.de/" style="color: blue" target="_blank">National Research Data Infrastructure – NFDI4Chem</a> – Project number: 441958208',
+      copyright: `Copyright © ${new Date().getFullYear()} Steinbeck Lab`
     }
   }
 })
