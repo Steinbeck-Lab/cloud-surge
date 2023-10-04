@@ -19,16 +19,16 @@ hero:
 
 features:
   - icon: 🛠️
-    title: Configurable and Extendable Architecture
-    details: Code can be customized and extended to accommodate different requirements and functionalities.
+    title: Parallel Job Pattern - External work queue
+    details: Supports reliable parallel execution of Pods, where each Pod can work in a set of independent but related work items.
   - icon: 💻
-    title: Multi-Cloud Compatibility
-    details: Support for seamless integration and operations across multiple cloud service providers
+    title: Cloud-Agnostic Deployment Solution
+    details: A versatile deployment solution that enables Surge to be seamlessly deployed on any K8S cloud service providers, offering flexibility.
   - icon: 🌍
-    title: Sustainability
-    details: Focus on the need for resourcefulness and environmentally conscious computing practices in scientific research
+    title: Efficient Resource Optimization
+    details: A sustainable approach to cloud computing that optimizes solution efficiency, minimizes resource wastage.
   - icon: 📚
-    title: Documentation
-    details: Thorough docs and Step-by-step sequential set of instructions to help users deploy, generate and filter molecular datasets of interest.
+    title: Comprehensive Documentation and Guides
+    details: Extensive and user-friendly documentation with step-by-step guides to assist users in understanding and extending the solution to its fullest potential.
 ---
 
