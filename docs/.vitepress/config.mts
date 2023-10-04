@@ -38,7 +38,22 @@ export default defineConfig({
      {
         text: 'Google Cloud - GKE',
         items: [
-          { text: 'Guides', link: '/guides' },
+          { text: 'Guides', link: '/google-cloud-gke/guides',
+            items: [
+              { text: 'Setup', link: '/google-cloud-gke/guides',
+              items: [
+                { text: 'Project', link: '/google-cloud-gke/create-google-cloud-project' },
+                { text: 'Cluster', link: '/google-cloud-gke/create-cluster' },
+                { text: 'Workspace', link: '/google-cloud-gke/clone-project' },
+                { text: 'Service Account', link: '/google-cloud-gke/create-service-account' },
+                { text: 'Storage', link: '/google-cloud-gke/create-bucket' },
+              ],
+            },
+              { text: 'Cloud Surge-Jobs', link: '/google-cloud-gke/launch-cloud-surge' },
+              { text: 'Output', link: '/google-cloud-gke/access-result' },
+              { text: 'Delete', link: '/google-cloud-gke/delete-everything' },
+            ]
+          },
         ]
       },
       // {
