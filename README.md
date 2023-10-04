@@ -6,6 +6,9 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/Steinbeck-Lab/cloud-surge.svg)](https://GitHub.com/Steinbeck-Lab/cloud-surge/graphs/contributors/)
 [![Powered by CDK](https://img.shields.io/badge/Powered%20by-CDK-blue.svg?style=flat&logo=chem)](https://cdk.github.io)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8383954.svg)](https://doi.org/10.5281/zenodo.8383954)
+![Workflow](https://github.com/Steinbeck-Lab/cloud-surge/actions/workflows/build.yml/badge.svg)
+![Workflow](https://github.com/Steinbeck-Lab/cloud-surge/actions/workflows/release-please.yml/badge.svg)
+
 
 ## Overview of Cloud Surge
 
