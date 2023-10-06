@@ -31,6 +31,7 @@ export default defineConfig({
           { text: 'Docker', link: '/docker' },
           { text: 'Cluster Deployment (K8S)', link: '/deployment' },
           { text: 'Scaling', link: '/scaling' },
+          { text: 'Formulae', link: '/formulae' },
           { text: 'Filters', link: '/filters' },
           { text: 'Screening', link: '/screening' },
         ]
@@ -79,7 +80,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Cloud-Surge: Code and configurations released under the MIT License | Surge: Source code releases under Apache License 2.0 <br/> Funded by the <a href="https://www.dfg.de/en/index.jsp" style="color: blue" target="_blank">Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)</a> under the <a href="https://www.nfdi4chem.de/" style="color: blue" target="_blank">National Research Data Infrastructure – NFDI4Chem</a> – Project number: 441958208',
+      message: 'Cloud-Surge: Code and configurations released under the MIT License | Surge: Source code released under Apache License 2.0 <br/> Funded by the <a href="https://www.dfg.de/en/index.jsp" style="color: blue" target="_blank">Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)</a> under the <a href="https://www.nfdi4chem.de/" style="color: blue" target="_blank">National Research Data Infrastructure – NFDI4Chem</a> – Project number: 441958208',
       copyright: `Copyright © ${new Date().getFullYear()} Steinbeck Lab`
     }
   }
