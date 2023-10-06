@@ -92,3 +92,4 @@ This docker image contains the surge build and all the necessary scripts to run 
 
 Users can extend the docker file to customise the container or download the Docker image(s) from the Docker hub
 
+https://hub.docker.com/r/nfdi4chem/cloud-surge
