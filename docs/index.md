@@ -15,7 +15,7 @@ hero:
       link: /introduction
     - theme: alt
       text: Docker Images
-      link: /api-examples
+      link: https://hub.docker.com/r/nfdi4chem/cloud-surge
 
 features:
   - icon: 🛠️
