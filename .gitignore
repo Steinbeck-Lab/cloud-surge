@@ -10,3 +10,4 @@ docs/.vitepress/cache
 node_modules
 
 ops/logs/*
+.DS_Store
