@@ -8,10 +8,10 @@ If you have an existing GCP project you'd like to use for your GKE deployment, y
 3. **Create a New Project**:
 If you clicked on "New Project" in the previous step, you'll be prompted to fill out a form as shown in screenshot below:
 
-<img  src="/gke/create-project.png" alt="Create Project" style="width: 100vw">
+<img  src="/public/gke/create-project.png" alt="Create Project" style="width: 100vw">
 
 
 4. **Project Dashboard**:
 After creating the project, you will be taken to the dashboard screen as below
-<img  src="/gke/project-dashboard.1.png" alt="Project Dashboard" style="width: 100vw">
-<img  src="/gke/project-dashboard.2.png" alt="Project Dashboard" style="width: 100vw">
+<img  src="/public/gke/project-dashboard.1.png" alt="Project Dashboard" style="width: 100vw">
+<img  src="/public/gke/project-dashboard.2.png" alt="Project Dashboard" style="width: 100vw">

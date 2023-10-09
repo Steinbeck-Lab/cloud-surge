@@ -14,13 +14,13 @@ You can generate the formulae up to the give number of heavy atoms using the fol
 - Generate class file
 
 ```
-javac -cp ~/Downloads/commons-cli-1.5.0.jar:~/Downloads/cdk-2.9.jar FormulaGenerator.java
+javac -cp .:commons-cli-1.5.0.jar:cdk-2.9.jar FormulaeGenerator.java
 ```
 
 - Run formulae generator
 
 ```
-java -cp .:~/commons-cli-1.5.0.jar:~/Downloads/cdk-2.9.jar FormulaGenerator.class -heavyAtoms 7 -path ~/Downloads
+java -cp .:commons-cli-1.5.0.jar:cdk-2.9.jar FormulaeGenerator -heavyAtoms 7 -path ~/Downloads
 ```
 
 All the jar files are available in the resources/formulae/FormulaeGenerator.zip
