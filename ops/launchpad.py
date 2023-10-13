@@ -37,7 +37,7 @@ r = redis.Redis(host="127.0.0.1", port=6379, password="")
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
-        yield lst[i: i + n]
+        yield lst[i : i + n]
 
 
 if args.mfs:
@@ -82,7 +82,9 @@ if args.mfs:
                                 .replace("\n", "|")
                                 .replace("\r", "|")
                             )
-                            sessionOutputFile.write(",".join(list(mObj.values())) + "\n")
+                            sessionOutputFile.write(
+                                ",".join(list(mObj.values())) + "\n"
+                            )
                             # r.delete(key)
                             parsedKeys.append(nkey)
                         else:
@@ -101,7 +103,9 @@ if args.mfs:
                         imf = line.rstrip().split(",")[0]
                         outMf.append(imf)
                 failedMF = list(set(outMf).symmetric_difference(set(mf)))
-                tasksFailedOutputFile = open("logs/failed-" + exportSessionId + ".txt", "a+")
+                tasksFailedOutputFile = open(
+                    "logs/failed-" + exportSessionId + ".txt", "a+"
+                )
                 for fmf in failedMF:
                     tasksFailedOutputFile.write(fmf + "\n")
     else:

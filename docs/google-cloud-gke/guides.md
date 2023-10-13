@@ -1,4 +1,5 @@
 # Guide to Launch cloud-surge in Google Kubernetes Engine
+
 This documentation offers a step-by-step guide on launching Cloud Surge in Google Kubernetes Engine and saving the results in Google Cloud Storage.
 
 1. [Create Google Cloud Project](/google-cloud-gke/create-google-cloud-project.html)
@@ -9,16 +10,3 @@ This documentation offers a step-by-step guide on launching Cloud Surge in Googl
 6. [Launch Cloud Surge](/google-cloud-gke/launch-cloud-surge.html)
 7. [Access the Result](/google-cloud-gke/access-result.html)
 8. [Delete Everything](/google-cloud-gke/delete-everything.html)
-
-
-
-
-
-
-
-
-
-
-
-
-

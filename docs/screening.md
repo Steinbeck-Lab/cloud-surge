@@ -1,6 +1,6 @@
 # Screen structures
 
-Screening large chemical databases is a common task in various fields, including drug discovery, materials science, and chemical informatics. 
+Screening large chemical databases is a common task in various fields, including drug discovery, materials science, and chemical informatics.
 
 Storing the large datasets generated and screening them in principle sounds sensible but in view of efficiency its always advisable to screen these structures as and when they are generated and store only a subset of data making it more managable.
 

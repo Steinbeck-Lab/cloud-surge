@@ -1,7 +1,8 @@
 # Github Action
+
 [GitHub Actions](https://docs.github.com/en/actions) stands as an automation and continuous integration/continuous deployment (CI/CD) solution offered by GitHub. Within Surge, we've harnessed its capabilities to automate specific tasks and workflows, including the creation of releases and the building and pushing of Docker images to [Docker Hub](https://hub.docker.com/r/nfdi4chem/cloud-surge). The YAML files detailing these processes are outlined below and can also be located in the repository's 'workflows' directory.
 
-* Creating auto releases using [release-please](https://github.com/google-github-actions/release-please-action) with [Conventional Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/).
+- Creating auto releases using [release-please](https://github.com/google-github-actions/release-please-action) with [Conventional Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ```bash
 name: release-please-action
@@ -23,7 +24,9 @@ jobs:
           prerelease: true
 
 ```
-* Build and Push Docker Images to [Docker Hub](https://hub.docker.com/r/nfdi4chem/cloud-surge).
+
+- Build and Push Docker Images to [Docker Hub](https://hub.docker.com/r/nfdi4chem/cloud-surge).
+
 ```bash
 name : Dev Build and Publish
 
@@ -73,9 +76,10 @@ jobs:
           username: ${{ env.DOCKER_HUB_USERNAME  }}
           password: ${{ env.DOCKER_HUB_PASSWORD  }}
 ```
+
 All the sensitiove informations such as Docker Hub username and password are stored as Secrets in the repository's settings which can be used securely in the workflows.
 
-* Build and Deploy [Surge docs](https://steinbeck-lab.github.io/cloud-surge/actions.html) to GitHub Pages.
+- Build and Deploy [Surge docs](https://steinbeck-lab.github.io/cloud-surge/actions.html) to GitHub Pages.
 
 ```bash
 # Sample workflow for building and deploying a VitePress site to GitHub Pages

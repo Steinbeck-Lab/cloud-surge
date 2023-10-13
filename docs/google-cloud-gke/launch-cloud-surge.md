@@ -1,6 +1,9 @@
 # Launch Cloud Surge.
+
 Now we are all set to launch the cloud surge in order to generate the surge results. Open your gcloud editor, cd into the cloud-surge repo and run the commands listed below.
-1. Create the redis pod and service by running the below command. 
+
+1. Create the redis pod and service by running the below command.
+
 ```bash
 kubectl apply -f ./ops/redis/redis-pod.yaml
 
@@ -8,6 +11,7 @@ kubectl apply -f ./ops/redis/redis-service.yaml
 
 kubectl port-forward redis-master 6379:6379
 ```
+
 <img  src="/public/gke/launch-cloud-surge.1.png" alt="Create Secret" style="width: 100vw">
 After a few minutes, the Redis pod will become ready, and you will observe its status as 'Running' in the Workloads tab on the dashboard.
 
@@ -18,6 +22,7 @@ python launchpad.py --mfs=./../resources/formulae/5.txt
 
 python launchpad.py --stats
 ```
+
 <img  src="/public/gke/launch-cloud-surge.4.png" alt="Launch Cloud Surge" style="width: 100vw">
 <img  src="/public/gke/launch-cloud-surge.2.png" alt="Launch Cloud Surge" style="width: 100vw">
 <img  src="/public/gke/launch-cloud-surge.3.png" alt="Launch Cloud Surge" style="width: 100vw">
@@ -29,6 +34,7 @@ python launchpad.py --stats
 kubectl apply -f ./job.yml
 kubectl get pods
 ```
+
 <img  src="/public/gke/launch-cloud-surge.6.png" alt="Launch Cloud Surge" style="width: 100vw">
 <img  src="/public/gke/launch-cloud-surge.7.png" alt="Launch Cloud Surge" style="width: 100vw">
 
@@ -36,10 +42,10 @@ After the job is completed, you will notice a gradual decrease in the count of p
 <img  src="/public/gke/launch-cloud-surge.8.png" alt="Launch Cloud Surge" style="width: 100vw">
 
 4. To run the surge process for 6 heavy atoms, you can follow the same steps as mentioned above. You can refer to the screenshot below for guidance.
-<img  src="/public/gke/launch-cloud-surge.9.png" alt="Launch Cloud Surge" style="width: 100vw">
+   <img  src="/public/gke/launch-cloud-surge.9.png" alt="Launch Cloud Surge" style="width: 100vw">
 
 5. To speed up the process you can also increase the parallelism count in the 'job.yml' file before initiating the job.
-<img  src="/public/gke/launch-cloud-surge.10.png" alt="Launch Cloud Surge" style="width: 100vw">
+   <img  src="/public/gke/launch-cloud-surge.10.png" alt="Launch Cloud Surge" style="width: 100vw">
 
 ::: info
 
