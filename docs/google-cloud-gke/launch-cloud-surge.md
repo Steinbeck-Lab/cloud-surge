@@ -44,7 +44,7 @@ After the job is completed, you will notice a gradual decrease in the count of p
 4. To run the surge process for 6 heavy atoms, you can follow the same steps as mentioned above. You can refer to the screenshot below for guidance.
    <img  src="/public/gke/launch-cloud-surge.9.png" alt="Launch Cloud Surge" style="width: 100vw">
 
-1. To speed up the process you can also increase the parallelism count in the 'job.yml' file before initiating the job.
+5. To speed up the process you can also increase the parallelism count in the 'job.yml' file before initiating the job.
    <img  src="/public/gke/launch-cloud-surge.10.png" alt="Launch Cloud Surge" style="width: 100vw">
 
 ::: info
