@@ -6,7 +6,7 @@ Minikube is a tool that allows you to run a single-node Kubernetes cluster on yo
 
 1. Install Minikube: You can download and install Minikube from the official GitHub repository or use a package manager. Here, I'll provide instructions for downloading it directly:
 
-- Linux: 
+- Linux:
 
 ```
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -26,11 +26,13 @@ Download the Windows installer from the Minikube releases page on GitHub (https:
 2. Start Minikube:
 
 Open a terminal window and start Minikube with the following command:
+
 ```
 minikube start
 ```
 
 3. Check Minikube Status
+
 ```
 minikube status
 ```
@@ -44,11 +46,12 @@ kubectl get nodes
 ```
 
 5. Stop Minikube:
-When you're done working with your local cluster, you can stop Minikube with:
+   When you're done working with your local cluster, you can stop Minikube with:
 
 ```
 minikube stop
 ```
+
 This will shut down the virtual machine and the Kubernetes cluster.
 
 ### Build docker image
@@ -133,6 +136,7 @@ Completed mfs:0
 Failed mfs:0
 Lease / processing mfs:0
 ```
+
 ### Apply secrets to upload files to google bucket
 
 ```
@@ -188,7 +192,7 @@ Install gsutils from here  - https://cloud.google.com/storage/docs/gsutil_instal
 gsutil -m cp -r "gs://<bucket_name>/<session_id>/" .
 ```
 
-### Loginto the container 
+### Loginto the container
 
 ```
 kubectl exec --stdin --tty surge-job-wq-<id> -c cloud-surge -- /bin/bash
@@ -229,6 +233,7 @@ uniq -c
 ```
 
 *Debug pod*
+
 ```
 kubectl run -i --tty temp --image nfdi4chem/cloud-surge:v1.0.0-beta --command "/bin/sh"
 
@@ -236,6 +241,7 @@ kubectl delete pod/temp
 ```
 
 *Debug job*
+
 ```
 kubectl exec --stdin --tty surge-job-wq-kftlf -- /bin/bash
 

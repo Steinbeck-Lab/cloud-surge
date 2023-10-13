@@ -69,6 +69,7 @@ docker push us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-reposi
 ```
 
 *Test if the pod is running*
+
 ```
 kubectl run -i --tty temp --image us-central1-docker.pkg.dev/steffen-nfdi-spielplatz/surge-peqi-repository/surge-peq:latest --command "/bin/sh"
 ```
@@ -126,6 +127,7 @@ kubectl apply -f ./secrets.yaml
 ```
 
 *Helper Commands*
+
 ```
 kubectl exec --stdin --tty surge-job-wq-kftlf -- /bin/bash
 

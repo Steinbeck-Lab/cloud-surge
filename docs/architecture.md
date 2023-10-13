@@ -1,4 +1,4 @@
-# Architecture 
+# Architecture
 
 Kubernetes
 
@@ -26,7 +26,7 @@ Here is an overview of the steps in this architecture:
 
 <img  src="/architecture.png" alt="Cloud Surge Logo" style="width: 100vw">
 
-To begin the process in the Kubernetes cluster, a list of molecular formulae is created for a given heavy atom count. CDK is used to generate these formulae. The next step is to queue these formulae for a worker to execute Surge and generate chemical graph enumerations. 
+To begin the process in the Kubernetes cluster, a list of molecular formulae is created for a given heavy atom count. CDK is used to generate these formulae. The next step is to queue these formulae for a worker to execute Surge and generate chemical graph enumerations.
 
 As mentioned, Redis is utilized as the queue service, with the tasks being filled with the instructions to use Surge for enumerating all possible chemical graphs for a specific molecular formula.
 

@@ -1,6 +1,6 @@
 # Surge Filters
 
-Surge has the facility to remove molecules which contain certain substructures using the -B option. 
+Surge has the facility to remove molecules which contain certain substructures using the -B option.
 
 The argument of -B is a list of numbers separated by commas without spaces.
 

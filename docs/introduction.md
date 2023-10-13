@@ -21,7 +21,7 @@ There are already computationally constructed molecular databases in existence. 
 
 Surge excels in its ability to perform fast, duplicate-free, and efficient structure generation. To expedite this structure generation a step further, we present Cloud Surge, that harnesses the immense computational power of cloud environments coupled with the efficiency of Surge.
 
-The storage of these large databases represents another significant challenge in the construction process. An effective solution for storage leveraging cloud systems, such as the Google Cloud Storage (buckets) is also integrated here. The generated set of molecules can be stored in cloud environments and made available as publicly accessible databases. 
+The storage of these large databases represents another significant challenge in the construction process. An effective solution for storage leveraging cloud systems, such as the Google Cloud Storage (buckets) is also integrated here. The generated set of molecules can be stored in cloud environments and made available as publicly accessible databases.
 
 In addition to the Surge plugin system, which allows users to add new functionalities (chemical constraints according to their requirements) to Surge by incorporating their plugin classes. We also present an approach to screen generated structures before storage there by avoiding the necessity to store all enumerated structures.
 

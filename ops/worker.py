@@ -92,7 +92,10 @@ while not q.empty():
             # NPLikeness in between − 2.31 and 5.15
             smiles = line.decode("utf-8").rstrip()
             try:
-                url = "http://localhost:80/latest/chem/nplikeness/score?smiles=" + quote(smiles)
+                url = (
+                    "http://localhost:80/latest/chem/nplikeness/score?smiles="
+                    + quote(smiles)
+                )
                 nplikeness_score = float(requests.request("GET", url).text)
                 if nplikeness_score > 0:
                     if currentIterCount < 10000000:
@@ -160,12 +163,12 @@ while not q.empty():
         else:
             retries += 1
 
-p = subprocess.Popen(['pgrep', '-f', 'app.main:app'], stdout=subprocess.PIPE)
+p = subprocess.Popen(["pgrep", "-f", "app.main:app"], stdout=subprocess.PIPE)
 out, err = p.communicate()
 for line in out.splitlines():
     line = bytes.decode(line)
     pid = int(line.split(None, 1)[0])
-    k = subprocess.Popen(['kill', str(pid)], stdout=subprocess.PIPE)
+    k = subprocess.Popen(["kill", str(pid)], stdout=subprocess.PIPE)
     out, err = k.communicate()
     print(out)
     print(err)

@@ -1,6 +1,6 @@
 # Formulae
 
-Surge is a command-line generator of chemical structures. It is written in a portable subset of the C language and runs on any computer that can run nauty. The only compulsory input is a chemical formula. 
+Surge is a command-line generator of chemical structures. It is written in a portable subset of the C language and runs on any computer that can run nauty. The only compulsory input is a chemical formula.
 
 ```
 surge -u C8H11NO
